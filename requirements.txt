@@ -1,0 +1,17 @@
+fastapi
+uvicorn
+pydantic
+pydantic-settings
+sqlalchemy
+httpx
+pytest
+python-jose[cryptography]
+passlib
+bcrypt
+faiss-cpu
+langchain
+langchain-community
+sentence-transformers
+python-multipart
+openai
+python-dotenv
