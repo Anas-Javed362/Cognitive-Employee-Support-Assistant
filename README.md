@@ -1,228 +1,183 @@
-Yes. Since this is a **new project**, you can add it to GitHub cleanly from your local folder.
+# Cognitive Employee Support & Process Automation Assistant
 
-## Step 1: Open PowerShell in the project folder
+An enterprise-style employee support assistant built with **FastAPI and React**. The system handles employee knowledge and policy questions through RAG, creates IT support tickets, processes HR requests such as WFH requests, and supports human-in-the-loop escalation.
 
-```powershell
-cd "C:\path\to\Cognitive-Employee-Support-Assistant"
+## Architecture
+
+### Backend
+
+* FastAPI
+* SQLAlchemy
+* SQLite
+* Pydantic
+* Uvicorn
+
+### Frontend
+
+* React
+* Vite
+* React Router
+* Vanilla CSS
+
+### AI and RAG
+
+* LangChain
+* FAISS
+* Sentence Transformers
+* Local development fallback
+
+### Integrations
+
+* IBM watsonx.ai
+* Deterministic local fallback when IBM credentials are unavailable
+
+## Features
+
+* Knowledge and policy question answering using RAG
+* Local FAISS-based document retrieval
+* IT support ticket creation and tracking
+* HR request processing, including WFH requests
+* Human-in-the-loop escalation
+* React-based employee dashboard
+* Chat interface
+* Local AI fallback without external API credentials
+* SQLite database for local development
+
+## Project Setup
+
+### 1. Backend
+
+Create and activate a virtual environment:
+
+```bash
+python -m venv .venv
 ```
 
-Verify:
+Windows:
 
-```powershell
-dir
+```bash
+.\.venv\Scripts\activate
 ```
 
-You should see things like:
+macOS/Linux:
+
+```bash
+source .venv/bin/activate
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Initialize the database:
+
+```bash
+python scripts/seed_database.py
+```
+
+Ingest the knowledge base:
+
+```bash
+python scripts/ingest_knowledge.py
+```
+
+Start the backend:
+
+```bash
+uvicorn backend.app.main:app --reload
+```
+
+The API will be available at:
 
 ```text
-backend
-frontend
-scripts
-requirements.txt
-docker-compose.yml
-README.md
+http://127.0.0.1:8000
 ```
 
----
+## 2. Frontend
 
-## Step 2: Create `.gitignore`
+Open another terminal:
 
-Create a file named:
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The Vite development server will provide the frontend URL in the terminal.
+
+## IBM watsonx Configuration
+
+To enable IBM watsonx.ai, create a `.env` file in the project root:
+
+```env
+WATSONX_API_KEY=your_api_key
+WATSONX_PROJECT_ID=your_project_id
+WATSONX_URL=your_url
+WATSONX_MODEL_ID=meta-llama/llama-3-70b-instruct
+```
+
+If these credentials are not configured, the application automatically uses the local development fallback.
+
+## Local Development Mode
+
+The application can operate without IBM credentials using:
+
+* Rule-based intent routing
+* Local FAISS vector search
+* Sentence Transformers
+* Context-based fallback responses
+* SQLite database
+* React frontend
+
+This allows the complete application workflow to be tested locally without external AI services.
+
+## Docker
+
+To run the application using Docker:
+
+```bash
+docker-compose up --build
+```
+
+## Project Structure
 
 ```text
-.gitignore
+Cognitive-Employee-Support-Assistant/
+│
+├── backend/
+│   └── app/
+│
+├── frontend/
+│
+├── scripts/
+│   ├── seed_database.py
+│   └── ingest_knowledge.py
+│
+├── requirements.txt
+├── docker-compose.yml
+├── .env
+└── README.md
 ```
 
-Use:
+## Known Limitations
 
-```gitignore
-# Python
-__pycache__/
-*.py[cod]
-.venv/
-venv/
-env/
+* SQLite is currently used as the default database.
+* Production deployment should use PostgreSQL.
+* Frontend authentication currently requires further implementation.
+* IBM watsonx Assistant integration is planned.
+* IBM watsonx Orchestrate integration is planned for complex background workflows.
 
-# Environment variables
-.env
-.env.*
-!.env.example
+## Future Improvements
 
-# Node
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-pnpm-debug.log*
+* PostgreSQL production database
+* OAuth2/JWT authentication
+* IBM watsonx Assistant integration
+* IBM watsonx Orchestrate integration
+* Additional enterprise workflow integrations
+* Production deployment and monitoring
 
-# Build files
-dist/
-build/
-.vite/
+## License
 
-# Database
-*.db
-*.sqlite
-*.sqlite3
-
-# RAG / generated files
-faiss_index/
-vectorstore/
-*.index
-
-# Logs
-*.log
-logs/
-
-# IDE
-.vscode/
-.idea/
-
-# OS
-.DS_Store
-Thumbs.db
-```
-
-**Important:** Don't commit `.env` because it contains IBM credentials.
-
----
-
-## Step 3: Initialize Git
-
-```powershell
-git init
-```
-
-Then:
-
-```powershell
-git branch -M main
-```
-
----
-
-## Step 4: Check what will be uploaded
-
-```powershell
-git status
-```
-
-Make sure you **do not see**:
-
-```text
-.venv
-node_modules
-.env
-```
-
-If they appear, fix `.gitignore` before continuing.
-
----
-
-## Step 5: Add the project
-
-```powershell
-git add .
-```
-
-Then check:
-
-```powershell
-git status
-```
-
-You should see your project files staged.
-
----
-
-## Step 6: Make the first commit
-
-```powershell
-git commit -m "Initial release"
-```
-
----
-
-# Step 7: Create the GitHub repository
-
-Go to GitHub and create a **new repository**.
-
-Suggested name:
-
-```text
-Cognitive-Employee-Support-Assistant
-```
-
-For a clean first push:
-
-* Don't add another README
-* Don't add `.gitignore`
-* Don't add a license
-
-You've already created these locally.
-
----
-
-# Step 8: Connect your local project to GitHub
-
-GitHub will give you a repository URL similar to:
-
-```text
-https://github.com/YOUR_USERNAME/Cognitive-Employee-Support-Assistant.git
-```
-
-Run:
-
-```powershell
-git remote add origin https://github.com/YOUR_USERNAME/Cognitive-Employee-Support-Assistant.git
-```
-
-Verify:
-
-```powershell
-git remote -v
-```
-
-You should see:
-
-```text
-origin  https://github.com/YOUR_USERNAME/Cognitive-Employee-Support-Assistant.git (fetch)
-origin  https://github.com/YOUR_USERNAME/Cognitive-Employee-Support-Assistant.git (push)
-```
-
----
-
-# Step 9: Push
-
-```powershell
-git push -u origin main
-```
-
-That's it.
-
-Your project should now appear on GitHub.
-
----
-
-## Before pushing, one important check
-
-Because this project contains **React + Python + RAG**, run:
-
-```powershell
-git status --short
-```
-
-and:
-
-```powershell
-git ls-files | Select-String "node_modules|\.venv|\.env"
-```
-
-The second command should return **nothing**.
-
-Also check large files:
-
-```powershell
-Get-ChildItem -Recurse -File | Sort-Object Length -Descending | Select-Object -First 10 Name,Length
-```
-
-If you paste the output of those **three commands**, I can check whether the repository is clean and deployment-safe **before you push it**.
+This project is available under the MIT License.
